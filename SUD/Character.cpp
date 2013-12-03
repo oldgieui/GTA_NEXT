@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "Character.h"
 #include "WorldMap.h"
 #include <stdlib.h>
@@ -40,7 +40,7 @@ CCharacter::~CCharacter(void)
 
 void CCharacter::PrintPosition()
 {
-	printf_s("ÇöÀç À§Ä¡ : [%d, %d]\n", m_Status.position.x, m_Status.position.y);
+	printf_s("í˜„ì¬ ìœ„ì¹˜ : [%d, %d]\n", m_Status.position.x, m_Status.position.y);
 }
 
 ATTACK_RESULT CCharacter::IsHit()
@@ -54,6 +54,8 @@ ATTACK_RESULT CCharacter::IsHit()
 	case 2:
 		return AVOID;
 	}
+
+	// agebreak : warningì´ ë°œìƒí•©ë‹ˆë‹¤. 
 }
 
 void CCharacter::DamageCheck( ATTACK_RESULT result, int damage )
@@ -62,14 +64,14 @@ void CCharacter::DamageCheck( ATTACK_RESULT result, int damage )
 	{
 	case HIT:
 		m_Status.HP -= damage;
-		printf("¸ÂÀ½ °ø°İ. ¸¸Å­ÀÇ ÇÇÇØ %d!\n", damage);
+		printf("ë§ìŒ ê³µê²©. ë§Œí¼ì˜ í”¼í•´ %d!\n", damage);
 		break;
 	case GUARD:
 		m_Status.HP -= (int)(damage*0.5);
-		printf("¸·À½ °ø°İ. ¸¸Å­ÀÇ ±×Ä§ ÇÇÇØ. %0.f \n", (damage * 0.5));
+		printf("ë§‰ìŒ ê³µê²©. ë§Œí¼ì˜ ê·¸ì¹¨ í”¼í•´. %0.f \n", (damage * 0.5));
 		break;
 	case AVOID:
-		printf("ÇÇÇÔ!\n");
+		printf("í”¼í•¨!\n");
 		break;
 	default:
 		break;

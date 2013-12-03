@@ -212,6 +212,8 @@ void CGameManager::CreateNPCs(void)
 	{
 		pNPC[i] = new CNPC();
 	}
+
+	// agebreak : 직업은 define이나 enum을 이용하는게 편함. 
 	pNPC[0]->SetName("박민근");
 	pNPC[0]->SetJOB("교수");
 	pNPC[1]->SetName("김진우");
@@ -231,7 +233,10 @@ void CGameManager::CreateNPCs(void)
 	{
 		int mapX = rand()%MAP_SIZE;
 		int mapY = rand()%MAP_SIZE;
-		if ((mapX != m_PC->GetPosition().x || mapY != m_PC->GetPosition().y) && m_Map.GetMapInfo(mapX, mapY)->pMob == nullptr && m_Map.GetMapInfo(mapX, mapY)->pNPC == nullptr)
+		// agebreak : 코드를 옆으로 길게 쓰는건 좋은 습관이 아님. 아래 처럼 밑으로 쓰는게 보기 편함
+		if ((mapX != m_PC->GetPosition().x || mapY != m_PC->GetPosition().y) && 
+			m_Map.GetMapInfo(mapX, mapY)->pMob == nullptr && 
+			m_Map.GetMapInfo(mapX, mapY)->pNPC == nullptr)
 		{
 			pNPC[k]->SetATK(300);
 			pNPC[k]->SetHP(2000);
