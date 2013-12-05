@@ -6,7 +6,10 @@
 #include <iostream>
 #include "GameManager.h"
 
-//메인함수는 객체 ㄴㄴ. 진입점함수. 저기다 뭘 많이 넣는 건 객체지향적이지 않음. 게임매니저가 전체 관리하는 객체. 메인함수는 게임매니저만 만들면 됨
+
+//메인함수는 객체가 아니라 진입점함수. 저기다 뭘 많이 넣는 건 객체지향적이지 않음. 게임매니저가 전체 관리하는 객체. 메인함수는 게임매니저만 만들면 됨
+
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 // 	std::string helloWorld = "Hello World";
@@ -17,13 +20,13 @@ int _tmain(int argc, _TCHAR* argv[])
 // 
 // 	std::cout<<helloWorld<<std::endl;
 // 	
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	CGameManager gameManager;
 
 	gameManager.Init();
 	gameManager.Run();
 	gameManager.Release();
-
 
 //	getchar();
 	return 0;

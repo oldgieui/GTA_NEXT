@@ -17,13 +17,8 @@ public:
 
 protected:
 	bool InputProc(void);
-	CPlayer* m_PC;
-	CWorldMap m_Map;
-	std::string playerClass;
 	bool MacInputProc(void);
 	void OpenHelpMenu(void);
-	int damage;
-public:
 	void CreateMobs(void);
 	void FindAllMobs(CWorldMap* map);
 	void FindAllMobs(void);
@@ -32,5 +27,11 @@ public:
 	void GetOrder();
 	void CreateNPCs(void);
 	void FindAllNPCs(void);
+
+protected:
+	int damage;
+	CPlayer* m_PC;
+	CWorldMap m_Map;
+	std::string playerClass;
 };
 

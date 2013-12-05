@@ -183,17 +183,20 @@ bool CGameManager::InputProc(void)
 
 void CGameManager::CreateMobs(void)
 {
-	int numberOfMobs = (int)(MAP_SIZE*MAP_SIZE*0.25);
+	int numberOfMobs = (int)(MAP_SIZE * MAP_SIZE * 0.25);
 
 	for (int i = numberOfMobs; i > 0; --i)
 	{
-		int mapX = rand()%MAP_SIZE;
-		int mapY = rand()%MAP_SIZE;
+		int mapX = rand() % MAP_SIZE;
+		int mapY = rand() % MAP_SIZE;
 		char buf[16];
-		if ((mapX != m_PC->GetPosition().x || mapY != m_PC->GetPosition().y) && m_Map.GetMapInfo(mapX, mapY)->pMob == nullptr && m_Map.GetMapInfo(mapX, mapY)->pNPC == nullptr)
+		if ((mapX != m_PC->GetPosition().x || 
+			mapY != m_PC->GetPosition().y) &&
+			m_Map.GetMapInfo(mapX, mapY)->pMob == nullptr &&
+			m_Map.GetMapInfo(mapX, mapY)->pNPC == nullptr)
 		{
 			CMob* pMob = new CMob();
-			sprintf_s(buf, "레지스터 %04x", i*rand()%65536);
+			sprintf_s(buf, "레지스터 %04x", i * rand() % 65536);
 			std::string mobName = buf;
 			pMob->SetName(mobName);
 			pMob->SetATK(300);
@@ -201,7 +204,9 @@ void CGameManager::CreateMobs(void)
 			m_Map.GetMapInfo(mapX, mapY)->pMob = pMob;
 		}
 		else
+		{
 			++i;
+		}
 	}
 }
 
@@ -234,7 +239,8 @@ void CGameManager::CreateNPCs(void)
 		int mapX = rand()%MAP_SIZE;
 		int mapY = rand()%MAP_SIZE;
 		// agebreak : 코드를 옆으로 길게 쓰는건 좋은 습관이 아님. 아래 처럼 밑으로 쓰는게 보기 편함
-		if ((mapX != m_PC->GetPosition().x || mapY != m_PC->GetPosition().y) && 
+		if ((mapX != m_PC->GetPosition().x || 
+			mapY != m_PC->GetPosition().y) && 
 			m_Map.GetMapInfo(mapX, mapY)->pMob == nullptr && 
 			m_Map.GetMapInfo(mapX, mapY)->pNPC == nullptr)
 		{
@@ -247,6 +253,7 @@ void CGameManager::CreateNPCs(void)
 	}
 	
 }
+
 
 
 void CGameManager::Battle(CCharacter* pMob)
@@ -284,7 +291,7 @@ void CGameManager::Battle(CCharacter* pMob)
 				getchar();
 				break;
 			}
-			Sleep(500);
+			Sleep(1000);
 		}
 	}
 
