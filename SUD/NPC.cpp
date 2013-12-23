@@ -4,11 +4,13 @@
 
 CNPC::CNPC(void)
 {
+	printf_s("NPC created\n");
 }
 
 
 CNPC::~CNPC(void)
 {
+	printf_s("NPC deleted\n");
 }
 
 void CNPC::Respond( std::string question )
@@ -17,5 +19,10 @@ void CNPC::Respond( std::string question )
 	{
 		
 	}
+}
+
+void CNPC::PrintType()
+{
+	printf_s("My Type is CNPC\n");
 }
 

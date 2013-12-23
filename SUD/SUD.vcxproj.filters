@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="Title.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -55,7 +56,7 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="NPC.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -80,11 +81,11 @@
     <ClCompile Include="WorldMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="NPC.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GTA_NEXT.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

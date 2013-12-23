@@ -18,6 +18,7 @@ enum DIRECTION
 
 enum ATTACK_RESULT
 {
+	NONE,
 	HIT,
 	GUARD,
 	AVOID,
@@ -70,6 +71,8 @@ public:
 	
 	ATTACK_RESULT IsHit();
 	void DamageCheck(ATTACK_RESULT result, int damage);
+
+	virtual void PrintType() = 0;
 
 protected:
 	Status m_Status;

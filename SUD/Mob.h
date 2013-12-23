@@ -7,5 +7,6 @@ class CMob:
 public:
 	CMob(void);
 	~CMob(void);
+	void PrintType();
 };
 

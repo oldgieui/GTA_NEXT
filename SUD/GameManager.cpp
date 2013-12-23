@@ -12,6 +12,7 @@ CGameManager::CGameManager(void)
 	m_PC = new CPlayer;
 	m_PC->SetATK(300);
 	m_PC->SetHP(200000);
+
 }
 
 
@@ -22,7 +23,6 @@ CGameManager::~CGameManager(void)
 
 void CGameManager::Init(void)
 {
-	printf_s(" Great\t\tN\n TDD\t\tEX\n Awesome\t T\n\t\tFeat. Waldo\n\n");
 	srand((unsigned)time(NULL));
 	
 	playerClass;
@@ -274,7 +274,7 @@ void CGameManager::Battle(CCharacter* pMob)
 		{
 			printf_s("공격함 :    %s 에게!\n---->", pMob->GetName().c_str());
 
-			damage = m_PC->GetATK()-(m_PC->GetATK()*0.1*(rand()%3)+(m_PC->GetATK()*0.1*(rand()%3)));
+			damage = static_cast<int>(m_PC->GetATK()-(m_PC->GetATK()*0.1*(rand()%3)+(m_PC->GetATK()*0.1*(rand()%3))));
 			pMob->DamageCheck(pMob->IsHit(), damage);
 			if(pMob->IsAlive() == false)
 			{
@@ -283,7 +283,7 @@ void CGameManager::Battle(CCharacter* pMob)
 			}
 
 			printf_s("공격받음 :  %s 로부터!\n---->", pMob->GetName().c_str());
-			damage = pMob->GetATK()-(pMob->GetATK()*0.1*(rand()%3)+(pMob->GetATK()*0.1*(rand()%3)));
+			damage = static_cast<int>(pMob->GetATK()-(pMob->GetATK()*0.1*(rand()%3)+(pMob->GetATK()*0.1*(rand()%3))));
 			m_PC->DamageCheck(m_PC->IsHit(), damage);
 			if(m_PC->IsAlive() == false)
 			{

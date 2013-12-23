@@ -8,6 +8,7 @@
 CCharacter::CCharacter(void)
 {
 	srand((unsigned)time(NULL));
+	printf_s("Character created\n");
 }
 
 void CCharacter::SetPosition(int x, int y){
@@ -36,6 +37,7 @@ void CCharacter::PositionMove(DIRECTION dir)
 
 CCharacter::~CCharacter(void)
 {
+	printf_s("Character deleted\n");
 }
 
 void CCharacter::PrintPosition()
@@ -53,9 +55,9 @@ ATTACK_RESULT CCharacter::IsHit()
 		return GUARD;
 	case 2:
 		return AVOID;
+	default:
+		return NONE;
 	}
-
-	// agebreak : warning이 발생합니다. 
 }
 
 void CCharacter::DamageCheck( ATTACK_RESULT result, int damage )
@@ -77,3 +79,8 @@ void CCharacter::DamageCheck( ATTACK_RESULT result, int damage )
 		break;
 	}
 } 
+
+// void CCharacter::PrintType()
+// {
+// 	printf_s("My Type is CCharacter\n");
+// }

@@ -11,7 +11,9 @@
 #include <tchar.h>
 #include <time.h>
 #include <crtdbg.h>
-
+#include <iostream>
+#include <fstream>
+#include <string>
 
 #ifdef _DEBUG
 #define new new(_CLIENT_BLOCK, __FILE__, __LINE__)
