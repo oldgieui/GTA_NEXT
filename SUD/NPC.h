@@ -1,35 +1,31 @@
 #pragma once
 #include "character.h"
+#include <vector>
+
+enum JOB
+{
+	PROFESSOR,
+	STUDENT
+};
 class CNPC :
 	public CCharacter
 {
 public:
-// 	enum JOB
-// 	{
-// 		POLICE,
-// 		PROFESSOR,
-// 		TEACHER,
-// 		STUDENT,
-// 		CODE,
-// 		GAMECONSOLE,
-// 		PINGPONG_RACKET
-// 	};
-
-	enum NAME
-	{
-
-	};
 
 	CNPC(void);
 	~CNPC(void);
 	
-	void SetJOB(std::string job){m_job = job;}
-	std::string GetJOB(){return m_job;}
-
-	void Respond(std::string question);
-
+	
+	void Speak(int n);
+	void Speak();
+	void AddSpeach(std::string speach);
 	void PrintType();
+	void SpeachInit();
+	void SetJob(JOB job){m_Job = job;}
+	JOB GetJob(){return m_Job;}
+
 private:
-	std::string m_job;
+	std::vector<std::string> m_Conversation;
+	JOB m_Job;
 };
 

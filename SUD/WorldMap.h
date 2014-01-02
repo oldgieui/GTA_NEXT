@@ -15,7 +15,7 @@ public:
 	~CWorldMap(void);
 
 	MapInfo* GetMapInfo(int x, int y);
-	MapInfo* GetMapInfo(Position pos);
+	//MapInfo* GetMapInfo(Position pos);
 
 protected:
 	MapInfo m_mapInfo[MAP_SIZE][MAP_SIZE];

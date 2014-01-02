@@ -8,41 +8,18 @@
 CCharacter::CCharacter(void)
 {
 	srand((unsigned)time(NULL));
-	printf_s("Character created\n");
-}
-
-void CCharacter::SetPosition(int x, int y){
-	m_Status.position.x = x;
-	m_Status.position.y = y;
-}
-
-void CCharacter::PositionMove(DIRECTION dir)
-{
-	switch (dir)
+	//printf_s("Character created\n");
+	for (int i = 0; i<EQUIP_MAX; ++i)
 	{
-	case DIR_UP:
-		m_Status.position.y = __max(m_Status.position.y -1, 0);
-		break;
-	case DIR_DOWN:
-		m_Status.position.y = __min(m_Status.position.y +1, MAP_SIZE -1);
-		break;
-	case DIR_LEFT:
-		m_Status.position.x = __max(m_Status.position.x -1, 0);
-		break;
-	case  DIR_RIGHT:
-		m_Status.position.x = __min(m_Status.position.x +1, MAP_SIZE -1);
-		break;
+		m_Equipment[i] = nullptr;
 	}
 }
 
+
+
 CCharacter::~CCharacter(void)
 {
-	printf_s("Character deleted\n");
-}
-
-void CCharacter::PrintPosition()
-{
-	printf_s("현재 위치 : [%d, %d]\n", m_Status.position.x, m_Status.position.y);
+	//printf_s("Character deleted\n");
 }
 
 ATTACK_RESULT CCharacter::IsHit()
@@ -66,21 +43,54 @@ void CCharacter::DamageCheck( ATTACK_RESULT result, int damage )
 	{
 	case HIT:
 		m_Status.HP -= damage;
-		printf("맞음 공격. 만큼의 피해 %d!\n", damage);
+		printf("공격이 명중, %d만큼의 피해!\n", damage);
 		break;
 	case GUARD:
 		m_Status.HP -= (int)(damage*0.5);
-		printf("막음 공격. 만큼의 그침 피해. %0.f \n", (damage * 0.5));
+		printf("방어 발동,  %0.f만큼의 피해에 그침. \n", (damage * 0.5));
 		break;
 	case AVOID:
-		printf("피함!\n");
+		printf("회피함!\n");
 		break;
 	default:
 		break;
 	}
 } 
 
-// void CCharacter::PrintType()
-// {
-// 	printf_s("My Type is CCharacter\n");
-// }
+CItem* CCharacter::GetEquippedItem( ITEM_TYPE type )
+{
+	switch (type)
+	{
+	case WEAPON:
+		return m_Equipment[WEAPON];
+		break;
+	case ARMOR:
+		return m_Equipment[ARMOR];
+		break;
+	case ACCESSORY:
+		return m_Equipment[ACCESSORY];
+		break;
+	case EQUIP_MAX:
+		break;
+	default:
+		break;
+	}
+}
+
+void CCharacter::EquipNewItem( CItem* newItem )
+{
+	switch (newItem->GetItemType())
+	{
+	case WEAPON:
+		m_Equipment[WEAPON] = newItem;
+		break;
+	case ARMOR:
+		m_Equipment[ARMOR] = newItem;
+		break;
+	case ACCESSORY:
+		m_Equipment[ACCESSORY] = newItem;
+		break;
+	default:
+		break;
+	}
+}

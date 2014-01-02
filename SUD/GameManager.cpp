@@ -6,13 +6,13 @@
 #include <string>
 #include "Mob.h"
 #include <windows.h>
+//#include "MapManager.h"
 
 CGameManager::CGameManager(void)
 {
 	m_PC = new CPlayer;
 	m_PC->SetATK(300);
 	m_PC->SetHP(200000);
-
 }
 
 
@@ -25,24 +25,7 @@ void CGameManager::Init(void)
 {
 	srand((unsigned)time(NULL));
 	
-	playerClass;
-	while (playerClass != "2" && playerClass != "3")
-	{
-		printf("주인공을 선택하십시오\n1. 교수\n2. 비전공자\n3. 맥북\n");
-		getline(std::cin, playerClass);
-		if (playerClass == "1")
-		{
-			printf("교수는 아직 채용되지 않았습니다.\n\n");
-			playerClass = "0";
-		}
-		if (playerClass == "2")
-		{
-			std::string name = "비전공자";
-			m_PC->SetName(name);
-		}
-	}
-	printf("\n게임을 시작합니다.\n\n");
-
+	m_PC->SetName();
 	
 	Position pos;
 	pos.x = 5;
@@ -61,12 +44,7 @@ void CGameManager::Init(void)
 
 void CGameManager::Run(void)
 {
-	printf("W, A, S, D키로 이동할 수 있습니다.\nh를 입력하여 도움말을 볼 수 있습니다.\n");
-	if (playerClass == "3")
-	{
-		while ( MacInputProc()){}
-		return;
-	}
+	printf(" help라고 입력하면 도움말을 볼 수 있습니다.\n");
 	while (InputProc())
 	{
 	}
@@ -75,7 +53,7 @@ void CGameManager::Run(void)
 
 void CGameManager::Release(void)
 {
-	printf("[오베르 가메!]\n");
+	printf("Thank you for playing\n");
 	getchar();
 }
 
@@ -116,7 +94,7 @@ bool CGameManager::InputProc(void)
 	{
 		FindAllNPCs();
 	}
-	else if (strInput == "h" || strInput == "H")
+	else if (strInput == "help" || strInput == "HELP")
 	{
 		OpenHelpMenu();
 	}
@@ -331,35 +309,6 @@ void CGameManager::FindAllNPCs(void){
 	}
 }
 
-bool CGameManager::MacInputProc( void )
-{
-
-	std::string strInput;
-	/*std::cin>>strInput;*/
-	getline(std::cin, strInput);
-
-	if (strInput == "w" || strInput == "W" || strInput == "s" || strInput == "S" || strInput == "a" || strInput == "A" || strInput == "d" || strInput == "D")
-	{
-		printf("맥북은 이동을 할 수 없습니다.\n");
-	}
-	else if (strInput == "f" || strInput == "F")
-	{
-		printf("맥북은 행동을 할 수 없습니다.\n");
-	}
-	else if (strInput == "h" || strInput == "H")
-	{
-		printf("맥북에 도움말이 설치되어 있지 않습니다.\n");
-	}
-	else if (strInput == "q" || strInput == "Q")
-	{
-		printf_s("게임을 종료합니다.\n");
-		return false;
-	}
-	else
-		printf_s("잘못된 명령입니다.\n");
-
-	return true;
-}
 
 void CGameManager::OpenHelpMenu( void )
 {

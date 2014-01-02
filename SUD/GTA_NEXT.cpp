@@ -5,7 +5,9 @@
 #include <string>
 #include <iostream>
 #include "GameManager.h"
+#include "GameManager2.h"
 #include <iosfwd>
+#include "MapManager.h"
 
 std::string getAsciiArts(std::ifstream& File);
 void PrintAsciiArts(std::string filePath);
@@ -69,14 +71,14 @@ int _tmain(void)
 // 	mainTitle.close();
 
 	PrintAsciiArts("AA/Title.txt");
-
-	CGameManager gameManager;
+	/*std::cout << CMapManager::GetInstance()->NextHall.GetChildMapChips()[5]->GetMapName() << std::endl;*/
+	CGameManager2 gameManager;
 
 	gameManager.Init();
 	gameManager.Run();
 	gameManager.Release();
 
-	//	getchar();
+	getchar();
 	return 0;
 }
 

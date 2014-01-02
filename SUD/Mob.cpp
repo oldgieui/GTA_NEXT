@@ -5,13 +5,13 @@
 
 CMob::CMob(void)
 {
-	printf_s("Mob Created\n");
+	//printf_s("Mob Created\n");
 }
 
 
 CMob::~CMob(void)
 {
-	printf_s("Mob deleted\n");
+	//printf_s("Mob deleted\n");
 }
 
 void CMob::PrintType()
