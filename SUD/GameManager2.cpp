@@ -12,12 +12,24 @@ CGameManager2::CGameManager2(void)
 {
 	m_PC = new CPlayer;
 	m_PC->SetATK(300);
-	m_PC->SetHP(20000);
+	m_PC->SetHP(300);
+	KillAllMobs = new Quest();
+	FindTA = new Quest();
 }
 
 CGameManager2::~CGameManager2(void)
 {
 	delete m_PC;
+}
+
+Quest::Quest(void): isStart(false), isClear(false)
+{
+
+}
+
+Quest::~Quest(void)
+{
+
 }
 
 void CGameManager2::Init(void)
@@ -30,9 +42,8 @@ void CGameManager2::Init(void)
  	CreateMobs();
  	CreateNPCs();
 	CreateItems();
-
+	
 }
-
 
 void CGameManager2::Run(void)
 {
@@ -72,10 +83,7 @@ bool CGameManager2::InputProc(void)
 		"7. 도움말 보기\n" <<
 		"8. 게임 종료\n" << std::endl;
 	unsigned int inputBuffer = 0;
-	if (inputBuffer < 1 || inputBuffer > 8)
-	{
 	scanf_s("%d", &inputBuffer);
-	}
 
 	if (inputBuffer == 1)
 	{
@@ -142,6 +150,17 @@ bool CGameManager2::InputProc(void)
 		{
 			printf_s("싸울 상대가 없습니다.\n");
 		}
+
+
+		if (KillAllMobs->GetIsStart() == true &&
+			CMapManager::GetInstance()->Prompt2_4.GetMob() == nullptr &&
+			CMapManager::GetInstance()->Prompt3_10.GetMob() == nullptr &&
+			CMapManager::GetInstance()->Prompt4_11.GetMob() == nullptr &&
+			CMapManager::GetInstance()->Prompt4_14.GetMob() == nullptr)
+		{
+			KillAllMobs->setClear();
+		}
+
 		return true;
 	}
 	else if (inputBuffer == 3)
@@ -197,6 +216,20 @@ bool CGameManager2::InputProc(void)
 	}
 	else if (inputBuffer == 5)
 	{
+		if (KillAllMobs->GetIsStart() == false && 
+			CMapManager::GetInstance()->GetCurrentMap()->GetMapName() == 
+			"교수 B의 사무실")
+		{
+			KillAllMobs->setStart();
+			printf_s("\n\n\n\n Q  U  E  S  T\n\n모든 레지스터를 처치하라!\n\n\n");
+		}
+		else if (KillAllMobs->GetIsClear() == true &&
+			CMapManager::GetInstance()->GetCurrentMap()->GetMapName() == 
+			"교수 B의 사무실")
+		{
+			printf_s("교수 B : 오오 수고했네!\n");
+		}
+		
 
 	}
 	else if (inputBuffer == 6)
@@ -231,7 +264,7 @@ bool CGameManager2::InputProc(void)
 	else
 		printf_s("잘못된 명령입니다.\n\n");
 
-
+	//system("cls");
 	return true;
 }
 
@@ -261,6 +294,9 @@ void CGameManager2::CreateNPCs(void)
 	for (int i = 0; i < 13; ++i)
 	{
 		pNPC[i] = new CNPC();
+		pNPC[i]->SetATK(2000);
+		pNPC[i]->SetHP(2000);
+		pNPC[i]->SpeachInit();
 	}
 	pNPC[0]->SetName("교수 P");
 	pNPC[0]->AddSpeach("일해라 닝겐");
@@ -270,6 +306,8 @@ void CGameManager2::CreateNPCs(void)
 	pNPC[1]->SetName("교수 9");
 	CMapManager::GetInstance()->Prof_SM9.SetNPC(pNPC[1]);
 	pNPC[2]->SetName("교수 B");
+	pNPC[2]->ClearSpeach();
+	pNPC[2]->AddSpeach("퀘스트를 줄 테니 5번을 눌러 보세요.");
 	CMapManager::GetInstance()->Prof_BYH.SetNPC(pNPC[2]);
 	pNPC[3]->SetName("교수 H");
 	CMapManager::GetInstance()->Prof_HSJ.SetNPC(pNPC[3]);
@@ -279,6 +317,8 @@ void CGameManager2::CreateNPCs(void)
 	pNPC[5]->SetName("교수 K");
 	CMapManager::GetInstance()->Prof_KDJ.SetNPC(pNPC[5]);
 	pNPC[6]->SetName("교수 L");
+	pNPC[6]->ClearSpeach();
+	pNPC[6]->AddSpeach("퀘스트를 줄 테니 5번을 눌러 보세요.");
 	CMapManager::GetInstance()->Prof_LSH.SetNPC(pNPC[6]);
 	pNPC[7]->SetName("교수 Y");
 	CMapManager::GetInstance()->Prof_YJS.SetNPC(pNPC[7]);
@@ -295,12 +335,7 @@ void CGameManager2::CreateNPCs(void)
 	CMapManager::GetInstance()->Recover3_9.SetNPC(pNPC[12]);
 
 
-	for (int k = 12; k >= 0; k--)
-	{
-		pNPC[k]->SetATK(300);
-		pNPC[k]->SetHP(2000);
-		pNPC[k]->SpeachInit();
-	}
+	
 }
 
 void CGameManager2::CreateItems( void )

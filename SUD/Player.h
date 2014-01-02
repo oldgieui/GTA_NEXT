@@ -4,6 +4,7 @@
 
 class CMapChip;
 
+
 class CPlayer :
 	public CCharacter
 {

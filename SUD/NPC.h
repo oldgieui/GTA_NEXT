@@ -15,10 +15,9 @@ public:
 	CNPC(void);
 	~CNPC(void);
 	
-	
-	void Speak(int n);
 	void Speak();
 	void AddSpeach(std::string speach);
+	void ClearSpeach();
 	void PrintType();
 	void SpeachInit();
 	void SetJob(JOB job){m_Job = job;}

@@ -2,8 +2,21 @@
 #include "Player.h"
 #include "MapChip.h"
 
-
 class CMob;
+
+class Quest
+{
+public:
+	Quest();
+	~Quest();
+	void setStart(){isStart = true;}
+	bool GetIsStart(){return isStart;}
+	void setClear(){isClear = true;}
+	bool GetIsClear(){return isClear;}
+private:
+	bool isStart;
+	bool isClear;
+};
 
 class CGameManager2
 {
@@ -32,5 +45,7 @@ protected:
 protected:
 	int attackPower;
 	CPlayer* m_PC;
+	Quest* KillAllMobs;
+	Quest* FindTA;
 };
 

@@ -29,15 +29,21 @@ void CNPC::AddSpeach( std::string speach )
 void CNPC::SpeachInit()
 {
 	char buf[90];
-	sprintf_s(buf, "안녕하신가! 힘세고 강한 아침, 만일 내게 물어보면 나는 %s", GetName());
+	sprintf_s(buf, "안녕하신가! 힘세고 강한 아침, 만일 내게 물어보면 나는 %s", GetName().c_str());
 	std::string dialog = buf;
 	AddSpeach(dialog);
 	AddSpeach("좋다 아침!");
 	AddSpeach("All Your Grade Are belong to us");
+	AddSpeach("더이상의 대화가 必要韓紙?");
 }
 
 void CNPC::Speak()
 {
 	std::cout << GetName() << " : " <<  m_Conversation[rand() % m_Conversation.size()] << std::endl;
+}
+
+void CNPC::ClearSpeach()
+{
+	m_Conversation.clear();
 }
 
