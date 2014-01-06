@@ -44,7 +44,7 @@ protected:
 
 protected:
 	int attackPower;
-	std::string inputBuffer;
+	
 	CPlayer* m_PC;
 	Quest* KillAllMobs;
 	Quest* FindTA;

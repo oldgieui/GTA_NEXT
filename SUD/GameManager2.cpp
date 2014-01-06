@@ -82,27 +82,28 @@ bool CGameManager2::InputProc(void)
 	// 	char ch = NULL;
 	// 	scanf_s("%c", &ch, sizeof(ch));
 	// 	printf_s("input:%c\n", ch);
-
-	
 	/*std::cin>>strInput;*/
-	std::cout << "현재 위치 : " << CMapManager::GetInstance()->GetCurrentMap()->GetMapName() 
-		<< std::endl;
 	
-	std::cout <<  "\n" << "원하는 행동을 선택해 주십시오.\n" << std::endl;
-	std::cout <<
-		"1. 이동하기\n" <<
-		"2. 싸우기\n" <<
-		"3. 대화하기\n" <<
-		"4. 살펴보기\n" <<
-		"5. 퀘스트\n" <<
-		"6. 내 정보\n" <<
-		"7. 도움말 보기\n" <<
-		"8. 게임 종료\n" << std::endl;
-
 	
-	getline(std::cin, inputBuffer);
+ 	std::cout << "현재 위치 : " << CMapManager::GetInstance()->GetCurrentMap()->GetMapName() 
+ 		<< std::endl;
+ 	
+ 	std::cout <<  "\n" << "원하는 행동을 선택해 주십시오.\n" << std::endl;
+ 	std::cout <<
+ 		"1. 이동하기\n" <<
+ 		"2. 싸우기\n" <<
+ 		"3. 대화하기\n" <<
+ 		"4. 살펴보기\n" <<
+ 		"5. 퀘스트\n" <<
+ 		"6. 내 정보\n" <<
+ 		"7. 도움말 보기\n" <<
+ 		"8. 게임 종료\n" << std::endl;
 
-	if (inputBuffer == "1")
+
+	int inputBuffer;
+	scanf_s("%d", &inputBuffer);
+
+	if (inputBuffer == 1)
 	{
 		printf_s("어디로 이동하시겠습니까?\n");
 		if (CMapManager::GetInstance()->GetCurrentMap()->GetParentMapChip() != nullptr)
@@ -130,9 +131,9 @@ bool CGameManager2::InputProc(void)
 			PrintProfImage(CMapManager::GetInstance()->GetCurrentMap()->GetMapName());
 		}
 		ShowMapMessage(CMapManager::GetInstance()->GetCurrentMap());
-		return true;
+		//return true;
 	}
-	else if (inputBuffer == "2")
+	else if (inputBuffer == 2)
 	{
 		if (CMapManager::GetInstance()->GetCurrentMap()->GetMob() != nullptr &&
 			CMapManager::GetInstance()->GetCurrentMap()->GetNPC() == nullptr)
@@ -140,7 +141,6 @@ bool CGameManager2::InputProc(void)
 			Battle(CMapManager::GetInstance()->GetCurrentMap()->GetMob());
 			if (m_PC->IsAlive())
 			{
-				//delete CMapManager::GetInstance()->GetCurrentMap()->GetMob();
 				CMapManager::GetInstance()->GetCurrentMap()->SetMob(nullptr);
 			}
 			else if (m_PC->IsAlive() == false)
@@ -154,7 +154,6 @@ bool CGameManager2::InputProc(void)
 			Battle(CMapManager::GetInstance()->GetCurrentMap()->GetNPC());
 			if (m_PC->IsAlive())
 			{
-				//delete CMapManager::GetInstance()->GetCurrentMap()->GetNPC();
 				CMapManager::GetInstance()->GetCurrentMap()->SetNPC(nullptr);
 			}
 			else if (m_PC->IsAlive() == false)
@@ -178,9 +177,9 @@ bool CGameManager2::InputProc(void)
 			KillAllMobs->setClear();
 		}
 
-		return true;
+		//return true;
 	}
-	else if (inputBuffer == "3")
+	else if (inputBuffer == 3)
 	{
 		if (CMapManager::GetInstance()->GetCurrentMap()->GetNPC() != nullptr)
 		{
@@ -189,7 +188,7 @@ bool CGameManager2::InputProc(void)
 		else
 			printf_s("대화를 나눌 상대가 없습니다.\n");
 	}
-	else if (inputBuffer == "4")
+	else if (inputBuffer == 4)
 	{
 		if (CMapManager::GetInstance()->GetCurrentMap()->GetNPC()!= nullptr)
 		{
@@ -232,7 +231,7 @@ bool CGameManager2::InputProc(void)
 			CMapManager::GetInstance()->GetCurrentMap()->SetHiddenItem(nullptr);
 		}
 	}
-	else if (inputBuffer == "5")
+	else if (inputBuffer == 5)
 	{
 		if (KillAllMobs->GetIsStart() == false && 
 			CMapManager::GetInstance()->GetCurrentMap()->GetMapName() == 
@@ -250,7 +249,7 @@ bool CGameManager2::InputProc(void)
 		
 
 	}
-	else if (inputBuffer == "6")
+	else if (inputBuffer == 6)
 	{
 		std::cout << "이름 : " << m_PC->GetName() << std::endl;
 		std::cout << "HP : " << m_PC->GetHP() << std::endl;
@@ -270,11 +269,11 @@ bool CGameManager2::InputProc(void)
 		}
 		
 	}
-	else if (inputBuffer == "7")
+	else if (inputBuffer == 7)
 	{
 		OpenHelpMenu();
 	}
-	else if (inputBuffer == "8")
+	else if (inputBuffer == 8)
 	{
 		printf_s("게임을 종료합니다\n");
 		return false;
