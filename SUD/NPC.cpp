@@ -28,7 +28,7 @@ void CNPC::AddSpeach( std::string speach )
 
 void CNPC::SpeachInit()
 {
-	char buf[90];
+	char buf[160];
 	sprintf_s(buf, "안녕하신가! 힘세고 강한 아침, 만일 내게 물어보면 나는 %s", GetName().c_str());
 	std::string dialog = buf;
 	AddSpeach(dialog);

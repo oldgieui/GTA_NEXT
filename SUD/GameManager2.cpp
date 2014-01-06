@@ -15,11 +15,18 @@ CGameManager2::CGameManager2(void)
 	m_PC->SetHP(300);
 	KillAllMobs = new Quest();
 	FindTA = new Quest();
+	BFT = new CItem();
+	URF = new CItem();
+	
 }
 
 CGameManager2::~CGameManager2(void)
 {
 	delete m_PC;
+	delete KillAllMobs;
+	delete FindTA;
+	delete BFT;
+	delete URF;
 }
 
 Quest::Quest(void): isStart(false), isClear(false)
@@ -55,6 +62,15 @@ void CGameManager2::Run(void)
 
 void CGameManager2::Release(void)
 {
+	CMapManager::GetInstance()->ReleaseInstance();
+	for (int i = 0; i < 4; ++i)
+	{
+		delete pMob[i];
+	}
+	for (int i = 0; i < 13; ++i)
+	{
+		delete pNPC[i];
+	}
 	printf("Thank you for playing\n");
 }
 
@@ -82,10 +98,11 @@ bool CGameManager2::InputProc(void)
 		"6. 내 정보\n" <<
 		"7. 도움말 보기\n" <<
 		"8. 게임 종료\n" << std::endl;
-	unsigned int inputBuffer = 0;
-	scanf_s("%d", &inputBuffer);
 
-	if (inputBuffer == 1)
+	
+	getline(std::cin, inputBuffer);
+
+	if (inputBuffer == "1")
 	{
 		printf_s("어디로 이동하시겠습니까?\n");
 		if (CMapManager::GetInstance()->GetCurrentMap()->GetParentMapChip() != nullptr)
@@ -115,7 +132,7 @@ bool CGameManager2::InputProc(void)
 		ShowMapMessage(CMapManager::GetInstance()->GetCurrentMap());
 		return true;
 	}
-	else if (inputBuffer == 2)
+	else if (inputBuffer == "2")
 	{
 		if (CMapManager::GetInstance()->GetCurrentMap()->GetMob() != nullptr &&
 			CMapManager::GetInstance()->GetCurrentMap()->GetNPC() == nullptr)
@@ -123,7 +140,7 @@ bool CGameManager2::InputProc(void)
 			Battle(CMapManager::GetInstance()->GetCurrentMap()->GetMob());
 			if (m_PC->IsAlive())
 			{
-				delete CMapManager::GetInstance()->GetCurrentMap()->GetMob();
+				//delete CMapManager::GetInstance()->GetCurrentMap()->GetMob();
 				CMapManager::GetInstance()->GetCurrentMap()->SetMob(nullptr);
 			}
 			else if (m_PC->IsAlive() == false)
@@ -137,7 +154,7 @@ bool CGameManager2::InputProc(void)
 			Battle(CMapManager::GetInstance()->GetCurrentMap()->GetNPC());
 			if (m_PC->IsAlive())
 			{
-				delete CMapManager::GetInstance()->GetCurrentMap()->GetNPC();
+				//delete CMapManager::GetInstance()->GetCurrentMap()->GetNPC();
 				CMapManager::GetInstance()->GetCurrentMap()->SetNPC(nullptr);
 			}
 			else if (m_PC->IsAlive() == false)
@@ -163,7 +180,7 @@ bool CGameManager2::InputProc(void)
 
 		return true;
 	}
-	else if (inputBuffer == 3)
+	else if (inputBuffer == "3")
 	{
 		if (CMapManager::GetInstance()->GetCurrentMap()->GetNPC() != nullptr)
 		{
@@ -172,7 +189,7 @@ bool CGameManager2::InputProc(void)
 		else
 			printf_s("대화를 나눌 상대가 없습니다.\n");
 	}
-	else if (inputBuffer == 4)
+	else if (inputBuffer == "4")
 	{
 		if (CMapManager::GetInstance()->GetCurrentMap()->GetNPC()!= nullptr)
 		{
@@ -212,9 +229,10 @@ bool CGameManager2::InputProc(void)
 				m_PC->SetHP(m_PC->GetHP() + CMapManager::GetInstance()->GetCurrentMap()->GetItem()->GetHPBonus());
 			}
 			m_PC->EquipNewItem(CMapManager::GetInstance()->GetCurrentMap()->GetItem());
+			CMapManager::GetInstance()->GetCurrentMap()->SetHiddenItem(nullptr);
 		}
 	}
-	else if (inputBuffer == 5)
+	else if (inputBuffer == "5")
 	{
 		if (KillAllMobs->GetIsStart() == false && 
 			CMapManager::GetInstance()->GetCurrentMap()->GetMapName() == 
@@ -232,7 +250,7 @@ bool CGameManager2::InputProc(void)
 		
 
 	}
-	else if (inputBuffer == 6)
+	else if (inputBuffer == "6")
 	{
 		std::cout << "이름 : " << m_PC->GetName() << std::endl;
 		std::cout << "HP : " << m_PC->GetHP() << std::endl;
@@ -252,11 +270,11 @@ bool CGameManager2::InputProc(void)
 		}
 		
 	}
-	else if (inputBuffer == 7)
+	else if (inputBuffer == "7")
 	{
 		OpenHelpMenu();
 	}
-	else if (inputBuffer == 8)
+	else if (inputBuffer == "8")
 	{
 		printf_s("게임을 종료합니다\n");
 		return false;
@@ -271,7 +289,7 @@ bool CGameManager2::InputProc(void)
 
 void CGameManager2::CreateMobs(void)
 {
-	CMob* pMob[4];
+	
 	for (int i = 0; i < 4; ++i)
 	{
 		char buf[16];
@@ -290,7 +308,7 @@ void CGameManager2::CreateMobs(void)
 
 void CGameManager2::CreateNPCs(void)
 {	
-	CNPC* pNPC[13];
+	
 	for (int i = 0; i < 13; ++i)
 	{
 		pNPC[i] = new CNPC();
@@ -333,21 +351,16 @@ void CGameManager2::CreateNPCs(void)
 	CMapManager::GetInstance()->Recover3_8.SetNPC(pNPC[11]);
 	pNPC[12]->SetName("익성캐논");
 	CMapManager::GetInstance()->Recover3_9.SetNPC(pNPC[12]);
-
-
-	
 }
 
 void CGameManager2::CreateItems( void )
 {
-	CItem* BFT = new CItem;
 	BFT->SetATKBonus(99999);
 	BFT->SetHPBonus(100);
 	BFT->SetItemType(WEAPON);
 	BFT->SetItemName("BIG FUCKING TEXTBOOK");
 	CMapManager::GetInstance()->Office.SetHiddenItem(BFT);
 
-	CItem* URF = new CItem;
 	URF->SetATKBonus(100);
 	URF->SetHPBonus(99999);
 	URF->SetItemType(ACCESSORY);
